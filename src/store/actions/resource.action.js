@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-
+import store from "../index";
 import axios from "../../api/index";
 
 const getStart = () => {
@@ -122,6 +122,55 @@ export const updateDistrict = (idDistrict) => {
       dispatch(getStart());
       const wardsResponse = await axios.get(`/api/address/ward/${idDistrict}`);
       dispatch(getWardsSuccess(wardsResponse.data.data));
+    } catch (error) {
+      dispatch(getFailed(error.response));
+    }
+  };
+};
+
+export const updateLanding = (formValue, filesUpload) => {
+  return async (dispatch) => {
+    try {
+      dispatch(getStart());
+
+      if (filesUpload.length) {
+        const formData = new FormData();
+        filesUpload.forEach((file) => formData.append("file", file));
+        const imageResponse = await axios({
+          method: "POST",
+          url: "/upload/shop/logo",
+          data: formData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        const updateResponse = await axios.post("/api/shopinfo/ins", {
+          ...store.getState().resource.landing,
+          title: formValue?.title || "",
+          logo: imageResponse.data.data[0],
+          address: `${formValue?.detailAddress} || ${formValue?.ward} || ${formValue?.district} || ${formValue?.provide}`,
+          email: formValue.email,
+          manager: formValue.manager,
+          phone: formValue.phone,
+          telegram: formValue.telegram,
+          website: formValue.website,
+          youtube: formValue.youtube,
+        });
+        dispatch(getLandingSuccess(updateResponse.data.data));
+      } else {
+        const updateResponse = await axios.post("/api/shopinfo/ins", {
+          ...store.getState().resource.landing,
+          title: formValue?.title || "",
+          address: `${formValue?.detailAddress} || ${formValue?.ward} || ${formValue?.district} || ${formValue?.provide}`,
+          email: formValue.email,
+          manager: formValue.manager,
+          phone: formValue.phone,
+          telegram: formValue.telegram,
+          website: formValue.website,
+          youtube: formValue.youtube,
+        });
+        dispatch(getLandingSuccess(updateResponse.data.data));
+      }
     } catch (error) {
       dispatch(getFailed(error.response));
     }

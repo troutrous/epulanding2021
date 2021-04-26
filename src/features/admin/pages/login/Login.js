@@ -3,13 +3,13 @@ import { useDispatch } from "react-redux";
 import logo_png from "../../../../assets/images/logo.png";
 import { login } from "../../../../store/actions";
 
-const Login = () => {
+const Login = ({ match, history }) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(login(username, password));
+    dispatch(login(username, password, () => history.push("/dashboard")));
   };
   return (
     <div>

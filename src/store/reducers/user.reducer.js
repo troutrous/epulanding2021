@@ -1,13 +1,11 @@
 import * as actionTypes from "../actions/actionTypes";
 const initialState = {
-  accessToken: null,
-  tokenType: null,
   user: null,
   loading: false,
   error: null,
 };
 
-const resourceReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.LOGIN_START:
       return {
@@ -22,9 +20,18 @@ const resourceReducer = (state = initialState, action) => {
         error: action.payload.error,
       };
     case actionTypes.LOGIN_SUCCESS:
+      localStorage.setItem("user", JSON.stringify(action.payload));
       return {
         ...state,
-        provides: action.payload,
+        user: action.payload,
+        loading: false,
+        error: null,
+      };
+    case actionTypes.LOGOUT_SUCCESS:
+      localStorage.removeItem("user");
+      return {
+        ...state,
+        user: null,
         loading: false,
         error: null,
       };
@@ -33,4 +40,4 @@ const resourceReducer = (state = initialState, action) => {
   }
 };
 
-export default resourceReducer;
+export default userReducer;

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProvide, updateDistrict } from "../../store/actions";
+import {
+  updateProvide,
+  updateDistrict,
+  updateLanding,
+} from "../../store/actions";
 import camera_png from "../../assets/images/camera.png";
 
-const Destination = () => {
+const Destination = (props) => {
   const dispatch = useDispatch();
   const providesData = useSelector((state) => state.resource.provides);
   const districtsData = useSelector((state) => state.resource.districts);
@@ -47,6 +51,13 @@ const Destination = () => {
 
   const handleUpdateLanding = (e) => {
     e.preventDefault();
+    if (!formValue.ward || !formValue.district || !formValue.provide) {
+      return;
+    }
+    if (!formValue.logo && !filesUpload.length) {
+      return;
+    }
+    dispatch(updateLanding(formValue, filesUpload));
   };
 
   const handleImageChange = (e) => {
@@ -55,30 +66,19 @@ const Destination = () => {
       const filesArray = Array.from(e.target.files).map((file) =>
         URL.createObjectURL(file)
       );
-      setFilesUpload((prevFiles) =>
-        prevFiles.concat(Array.from(e.target.files))
-      );
+      setFilesUpload(Array.from(e.target.files));
 
       // console.log("filesArray: ", filesArray);
 
-      setSelectedFiles((prevFiles) => prevFiles.concat(filesArray));
+      setSelectedFiles(filesArray);
       Array.from(e.target.files).map(
         (file) => URL.revokeObjectURL(file) // avoid memory leak
       );
     }
   };
-  const renderPhotos = (source) => {
-    return source.map((photo, index) => {
-      return (
-        <img height="100px" width="100px" src={photo} alt={index} key={photo} />
-      );
-    });
-  };
   return (
     <div className="container small bg-white padding-form border-radius">
-      <h3 className="title-form text-center mb-4">
-        Update Landing Information
-      </h3>
+      <h3 className="title-form text-center mb-4">Câp nhật thông tin</h3>
       <form className="wrap-form" onSubmit={handleUpdateLanding}>
         <div className="form-group">
           <div className="form-group-upload-image border-radius position-relative">
@@ -93,13 +93,24 @@ const Destination = () => {
               type="file"
               onChange={handleImageChange}
             />
-            <div className="preview border-radius">
-              <img
-                className="border-radius"
-                src={camera_png}
-                alt="Preview Logo Landing"
-              />
-            </div>
+            {selectedFiles.length !== 0 && (
+              <div className="preview border-radius d-block">
+                <img
+                  className="border-radius"
+                  src={selectedFiles}
+                  alt="Preview Logo Landing"
+                />
+              </div>
+            )}
+            {selectedFiles.length === 0 && formValue.logo && (
+              <div className="preview border-radius d-block">
+                <img
+                  className="border-radius"
+                  src={`http://landapi.vveco.vn${formValue.logo}`}
+                  alt="Preview Logo Landing"
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="form-group">
@@ -125,7 +136,6 @@ const Destination = () => {
               onChange={(e) =>
                 setFormValue({ ...formValue, ward: e.target.value })
               }
-              defaultValue={wardsData[0]}
             >
               <option value="">Phường/Xã</option>
               {wardsData &&
@@ -156,7 +166,6 @@ const Destination = () => {
                 );
                 dispatch(updateDistrict(districtCode.id));
               }}
-              defaultValue={districtsData[0]}
             >
               <option value="">Quận/Huyện</option>
               {districtsData &&
@@ -188,7 +197,6 @@ const Destination = () => {
                 );
                 dispatch(updateProvide(provideCode?.id));
               }}
-              defaultValue={providesData[0]}
             >
               <option value="">Tỉnh/Thành phố</option>
               {providesData &&
@@ -291,6 +299,7 @@ const Destination = () => {
             }
           />
         </div>
+
         <button className="btn bg-main" type="submit">
           Cập nhật
         </button>

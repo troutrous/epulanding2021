@@ -92,13 +92,15 @@ body a:hover {
   padding-top: 15px;
 }
 .padding-form {
-  padding: 40px 180px;
+  padding: 20px 100px;
 }
 #main-container {
   padding: 0 10% 0 60px;
 }
 #main-no-sidebar {
   padding-top: 40px;
+  padding-bottom: 40px;
+  padding-left: 260px;
 }
 
 /*form*/
@@ -126,11 +128,13 @@ form.wrap-form .form-group-upload-image {
   width: 60%;
   background-color: #ff4a5212;
   margin: 0 auto;
+  
 }
-form.wrap-form .form-group-upload-image input {
+.form-group-upload-image input {
   top: 0;
   left: 0;
   opacity: 0;
+  cursor: pointer;
 }
 form.wrap-form .form-group-upload-image .preview {
   display: none;
@@ -248,7 +252,7 @@ nav#wrap-sidebar ul li.item-menu {
   padding: 0 25px 0 15px;
 }
 nav#wrap-sidebar ul li.item-menu a {
-  font-size: 20px;
+  font-size: 16px;
   padding: 8px 0 8px 15px;
   border-radius: 50px;
 }
