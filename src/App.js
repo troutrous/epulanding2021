@@ -1,52 +1,32 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./common/styles/style.css";
+import "./assets/styles/fontawesome/css/font-awesome.min.css";
+import Login from "./features/admin/pages/login/Login";
+import Dashboard from "./features/admin/pages/dashboard.js/Dashboard";
+import { useDispatch } from "react-redux";
+import { getProvides } from "./store/actions";
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProvides());
+  }, [dispatch]);
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/login" component={Login} />
+        <Redirect from="/" to="/landing" />
+      </Switch>
     </Router>
   );
 };
-
-function Home() {
-  return <h2>Home</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
-}
-
-function Users() {
-  return <h2>Users</h2>;
-}
 
 export default App;
