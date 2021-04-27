@@ -42,12 +42,40 @@ const getLandingSuccess = (dataSuccess) => {
   };
 };
 
+const getProducts = (dataSuccess) => {
+  return {
+    type: actionTypes.GET_PRODUCTS_SUCCESS,
+    payload: dataSuccess,
+  };
+};
+
 export const getProvides = () => {
   return async (dispatch) => {
     try {
       dispatch(getStart());
+
       const landingResponse = await axios.get("/api/user/getbyid/33/shop");
       dispatch(getLandingSuccess(landingResponse.data.data));
+      let productsResponse = [];
+      const productResponse117 = await axios.get(
+        "/api/public/getProduct?productID=117&shop_token=61V4SIaFH077s02ciOAEkmo6zWFAp88C"
+      );
+      const productResponse118 = await axios.get(
+        "/api/public/getProduct?productID=118&shop_token=61V4SIaFH077s02ciOAEkmo6zWFAp88C"
+      );
+      const productResponse119 = await axios.get(
+        "/api/public/getProduct?productID=119&shop_token=61V4SIaFH077s02ciOAEkmo6zWFAp88C"
+      );
+      const productResponse120 = await axios.get(
+        "/api/public/getProduct?productID=120&shop_token=61V4SIaFH077s02ciOAEkmo6zWFAp88C"
+      );
+      productsResponse = [
+        productResponse117.data.data,
+        productResponse118.data.data,
+        productResponse119.data.data,
+        productResponse120.data.data,
+      ];
+      dispatch(getProducts(productsResponse));
       const providesResponse = await axios.get("/api/address/province");
       dispatch(getProvidesSuccess(providesResponse.data.data));
       let provideCode = providesResponse.data.data.find(

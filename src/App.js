@@ -25,12 +25,11 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Redirect exact from="/" to="/landing" />
         {user && <Redirect from="/login" to="/dashboard" />}
         {!user && <Redirect from="/dashboard" to="/login" />}I
         <Route path="/dashboard" component={withRouter(Dashboard)} />
         <Route path="/login" component={Login} />
-        <Route path="/landing" component={Landing} />
+        <Route path="/" component={Landing} />
       </Switch>
     </Router>
   );

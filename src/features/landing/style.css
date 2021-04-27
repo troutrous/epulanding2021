@@ -255,7 +255,8 @@ section#wrap-ground .box-ground img {
   height: 200px;
   object-fit: cover;
 }
-
+body #main-container{padding: 0}
+header#wrap-header img{display:block;}
 footer#wrap-footer section#header-top {
   background-image: url("./images/video.png");
   color: white;

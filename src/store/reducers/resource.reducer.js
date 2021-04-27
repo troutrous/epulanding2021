@@ -3,6 +3,7 @@ const initialState = {
   provides: [],
   districts: [],
   wards: [],
+  products: [],
   landing: null,
   loading: false,
   error: null,
@@ -47,6 +48,13 @@ const resourceReducer = (state = initialState, action) => {
       return {
         ...state,
         landing: action.payload,
+        loading: false,
+        error: null,
+      };
+    case actionTypes.GET_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        products: action.payload,
         loading: false,
         error: null,
       };

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import camera_png from "../../assets/images/camera.png";
 const Posts = (props) => {
   const [filesUpload, setFilesUpload] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [description, setDescription] = useState("");
+  const products = useSelector((state) => state.resource.products);
   const handleImageChange = (e) => {
     // console.log(e.target.files[])
     if (e.target.files) {
@@ -62,6 +64,46 @@ const Posts = (props) => {
             Thêm
           </button>
         </div>
+      </section>
+      <section>
+        {products &&
+          products.map((product) => (
+            <div className="row mb-5 py-4 alert alert-light">
+              <div className="col-md-4">
+                <div className="form-group-upload-image border-radius position-relative h-100">
+                  {product.images.length !== 0 && (
+                    <div className="preview border-radius d-block position-absolute start-0">
+                      <img
+                        className="h-100 w-100 border-radius"
+                        src={product.images[0]}
+                        alt="Preview Logo Landing"
+                      />
+                    </div>
+                  )}
+                  {/* <div className="content d-flex align-items-center justify-content-center border-radius h-100 cursor-pointer">
+                <img className="mr-2" src={camera_png} alt="" />
+                <span>Chose a file or drag image it here</span>
+              </div>
+              <input
+                accept="image/*"
+                className="position-absolute h-100 w-100"
+                id="contained-button-file"
+                type="file"
+                onChange={handleImageChange}
+              /> */}
+                </div>
+              </div>
+              <div className="col-md-8">
+                <textarea
+                  className="form-control border border-secondary"
+                  id="exampleFormControlTextarea1"
+                  rows="10"
+                  placeholder="Something about description"
+                  value={product.content}
+                ></textarea>
+              </div>
+            </div>
+          ))}
       </section>
     </div>
   );

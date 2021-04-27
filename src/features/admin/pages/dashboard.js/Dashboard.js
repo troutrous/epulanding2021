@@ -13,9 +13,10 @@ import {
 import Destination from "../../../../common/components/Destination";
 import Posts from "../../../../common/components/Posts";
 import { logout } from "../../../../store/actions/user.action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 const Dashboard = ({ match }) => {
   const dispatch = useDispatch();
+  const landingData = useSelector((state) => state.resource.landing);
   return (
     <>
       {/* <header id="wrap-header" className="position-relative">
@@ -34,7 +35,13 @@ const Dashboard = ({ match }) => {
         <ul className="bg-white normal position-fixed">
           <li className="d-flex align-items-center justify-content-center">
             <Link to={`${match.url}`}>
-              <img src={logo_png} alt="" />
+              {/* <img src={logo_png} alt="" /> */}
+              {landingData?.logo && (
+                <img
+                  style={{ maxHeight: "35px" }}
+                  src={`http://landapi.vveco.vn${landingData?.logo}`}
+                />
+              )}
             </Link>
             {/* <img id="hide-nav" src={bar_png} alt="" /> */}
           </li>

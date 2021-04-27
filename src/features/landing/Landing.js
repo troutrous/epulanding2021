@@ -1,7 +1,17 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import "./style.css";
+import img_6 from "./images/6.png";
+import img_5 from "./images/5.png";
+import img_4 from "./images/4.png";
+import img_3 from "./images/3.png";
+import img_2 from "./images/2.png";
+import img_1 from "./images/1.png";
+import img_9 from "./images/post_9.png";
 // import "./aos.css";
 const Landing = () => {
+  const landingData = useSelector((state) => state.resource.landing);
+  const products = useSelector((state) => state.resource.products);
   return (
     <>
       <header id="wrap-header">
@@ -9,7 +19,10 @@ const Landing = () => {
           <section className="header-top">
             <div className="container">
               <a href="">
-                <img src="./images/logo.png" alt="" />
+                <img
+                  src={`http://landapi.vveco.vn${landingData?.logo}`}
+                  alt=""
+                />
               </a>
             </div>
           </section>
@@ -22,10 +35,7 @@ const Landing = () => {
                     <br /> chỉ trong quý
                     <br /> 2/2021
                   </h1>
-                  <p>
-                    Sở hữu văn phòng hạng A trung tâm hà nội <br /> miễn phí lên
-                    tới 12 tháng tiền thuê
-                  </p>
+                  <p>{landingData?.title}</p>
                 </div>
               </div>
               <div className="col-md-6">
@@ -87,7 +97,7 @@ const Landing = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="image-over-view">
-                  <img src="./images/4.png" alt="" />
+                  <img src={img_4} alt="" />
                 </div>
               </div>
               <div className="col-md-6">
@@ -167,7 +177,7 @@ const Landing = () => {
               </div>
               <div className="col-md-6">
                 <div className="img-office">
-                  <img src="./images/post_9.png" alt="" />
+                  <img src={img_9} alt="" />
                 </div>
               </div>
             </div>
@@ -187,7 +197,7 @@ const Landing = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="img-advantage">
-                  <img src="./images/2.png" alt="" />
+                  <img src={img_2} alt="" />
                 </div>
               </div>
               <div className="col-md-6">
@@ -237,58 +247,15 @@ const Landing = () => {
             <h3 className="title text-center text-uppercase ">Mặt bằng</h3>
             <div className="line-title bg-green"></div>
             <div className="row">
-              <div className="col-md-6">
-                <div className="box-ground">
-                  <p className="content">
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum is that it has a
-                    more-or-less normal distribution of letters, as opposed to
-                    using 'Content here, content here', making it look like
-                    readable English. Many desktop publishing
-                  </p>
-                  <img src="./images/1.png" alt="" />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="box-ground">
-                  <p className="content">
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum is that it has a
-                    more-or-less normal distribution of letters, as opposed to
-                    using 'Content here, content here', making it look like
-                    readable English. Many desktop publishing
-                  </p>
-                  <img src="./images/2.png" alt="" />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="box-ground">
-                  <p className="content">
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum is that it has a
-                    more-or-less normal distribution of letters, as opposed to
-                    using 'Content here, content here', making it look like
-                    readable English. Many desktop publishing
-                  </p>
-                  <img src="./images/3.png" alt="" />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="box-ground">
-                  <p className="content">
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. The point of using Lorem Ipsum is that it has a
-                    more-or-less normal distribution of letters, as opposed to
-                    using 'Content here, content here', making it look like
-                    readable English. Many desktop publishing
-                  </p>
-                  <img src="./images/4.png" alt="" />
-                </div>
-              </div>
+              {products &&
+                products.map((product) => (
+                  <div className="col-md-6">
+                    <div className="box-ground">
+                      <p className="content">{product?.comtent}</p>
+                      <img src={product.images[0]} alt="" />
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </section>
@@ -306,32 +273,32 @@ const Landing = () => {
             <div className="row">
               <div className="col-md-4">
                 <div className="img">
-                  <img src="./images/1.png" alt="" />
+                  <img src={img_1} alt="" />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="img">
-                  <img src="./images/2.png" alt="" />
+                  <img src={img_2} alt="" />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="img">
-                  <img src="./images/3.png" alt="" />
+                  <img src={img_3} alt="" />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="img">
-                  <img src="./images/4.png" alt="" />
+                  <img src={img_4} alt="" />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="img">
-                  <img src="./images/5.png" alt="" />
+                  <img src={img_5} alt="" />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className="img">
-                  <img src="./images/6.png" alt="" />
+                  <img src={img_6} alt="" />
                 </div>
               </div>
             </div>
@@ -353,7 +320,8 @@ const Landing = () => {
               <div className="col-md-5">
                 <h3>Hỗ trợ khác hàng 24/24</h3>
                 <p>
-                  <i className="fa fa-phone" aria-hidden="true"></i>093 2211 688
+                  <i className="fa fa-phone" aria-hidden="true"></i>
+                  {landingData?.phone}
                 </p>
               </div>
             </div>
@@ -371,19 +339,19 @@ const Landing = () => {
               <div className="col-md-4">
                 <p className="mb-0">
                   <i className="fa fa-map-marker" aria-hidden="true"></i>
-                  Tầng 24 tòa nhà TNL 54A Nguyễn Chí Thanh Đống Đa Hà Nội
+                  {landingData?.address}
                 </p>
               </div>
               <div className="col-md-4">
                 <p className="mb-0">
                   <i className="fa fa-phone" aria-hidden="true"></i>
-                  Hotline 093 2221 2222
+                  Hotline  {landingData?.telegram}
                 </p>
               </div>
               <div className="col-md-4">
                 <p className="mb-0">
                   <i className="fa fa-envelope" aria-hidden="true"></i>
-                  Email: hdhdhdhd@gmail.com
+                  Email:  {landingData?.email}
                 </p>
               </div>
             </div>
